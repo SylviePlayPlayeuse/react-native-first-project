@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   FlatList,
   Image,
@@ -6,37 +7,38 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useState } from 'react';
-import styles from '@/components/home/welcome/welcome.style';
-import { icons, SIZES } from '@/constants';
 import { useRouter } from 'expo-router';
 
-const jobTypes = ['Full-Time', 'Part-Time', 'Remote', 'Contractor'];
-const Welcome = () => {
+import styles from '@/components/home/welcome/welcome.style';
+import { icons, SIZES } from '@/constants';
+
+const jobTypes = ['Full-time', 'Part-time', 'Contractor'];
+
+const Welcome = ({ searchTerm, setSearchTerm, handleClick }) => {
   const router = useRouter();
-  const [activeJobType, setActiveJobType] = useState('Full-Time');
+  const [activeJobType, setActiveJobType] = useState('Full-time');
 
   return (
     <View>
       <View style={styles.container}>
         <Text style={styles.userName}>Hello Adrian</Text>
         <Text style={styles.welcomeMessage}>Find your perfect job</Text>
-        <Text style={styles.welcomePeople}>Salut les gens</Text>
       </View>
+
       <View style={styles.searchContainer}>
         <View style={styles.searchWrapper}>
           <TextInput
             style={styles.searchInput}
-            value={''}
-            onChange={() => {}}
-            placeholder={'What are you looking for ?'}
+            value={searchTerm}
+            onChangeText={(text) => setSearchTerm(text)}
+            placeholder="What are you looking for?"
           />
         </View>
 
-        <TouchableOpacity style={styles.searchBtn} onPress={() => {}}>
+        <TouchableOpacity style={styles.searchBtn} onPress={handleClick}>
           <Image
             source={icons.search}
-            resizeMode={'contain'}
+            resizeMode="contain"
             style={styles.searchBtnImage}
           />
         </TouchableOpacity>

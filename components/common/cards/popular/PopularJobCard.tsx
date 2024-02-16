@@ -1,5 +1,5 @@
-import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
+
 import styles from '@/components/common/cards/popular/popularjobcard.style';
 import { checkImageUrl } from '@/utils';
 
@@ -12,9 +12,9 @@ const PopularJobCard = ({ item, selectedJob, handleCardPress }) => {
       <TouchableOpacity style={styles.logoContainer(selectedJob, item)}>
         <Image
           source={{
-            uri: checkImageUrl(item.employer_logo)
+            uri: checkImageUrl(item?.employer_logo)
               ? item.employer_logo
-              : 'https://t4.ftcdn.net/jpg/05/05/61/73/360_F_505617309_NN1CW7diNmGXJFMicpY9eXHKV4sqz05H.jpg',
+              : 'https://t4.ftcdn.net/jpg/05/05/61/73/360_F_505617309_NN1CW7diNmGXJfMicpY9eXHKV4sqzO5H.jpg',
           }}
           resizeMode="contain"
           style={styles.logoImage}
@@ -25,7 +25,15 @@ const PopularJobCard = ({ item, selectedJob, handleCardPress }) => {
       </Text>
 
       <View style={styles.infoContainer}>
-        <Text style={styles.jobName(selectedJob, item)}>{item.job_title}</Text>
+        <Text style={styles.jobName(selectedJob, item)} numberOfLines={1}>
+          {item.job_title}
+        </Text>
+        <View style={styles.infoWrapper}>
+          <Text style={styles.publisher(selectedJob, item)}>
+            {item?.job_publisher} -
+          </Text>
+          <Text style={styles.location}> {item.job_country}</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );

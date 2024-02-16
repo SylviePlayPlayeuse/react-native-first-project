@@ -1,5 +1,6 @@
-import styles from './screenheader.style';
 import { Image, TouchableOpacity } from 'react-native';
+
+import styles from '@/components/common/header/screenheader.style';
 
 const ScreenHeaderBtn = ({ iconUrl, dimension, handlePress }) => {
   return (

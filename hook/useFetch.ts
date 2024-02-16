@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 
-export const useFetch = (endpoint, query) => {
+export const useFetch = (endpoint: string, query: Object) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -18,17 +17,32 @@ export const useFetch = (endpoint, query) => {
     },
   };
 
-  const fetchData = async () => {
+  const dataForNow = () => {
+    return [
+      {
+        job_id: 1,
+        employer_logo:
+          'https://img.freepik.com/free-vector/cute-panda-with-bamboo_138676-3053.jpg',
+        employer_name: 'Panda',
+        job_title: 'Panda Caretaker',
+        job_location: 'Panda Sanctuary',
+        job_description: 'Panda Caretaker',
+        job_type: 'Full Time',
+        job_salary: '1000',
+        job_currency: 'USD',
+      },
+    ];
+  };
+
+  const fetchData = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.request(options);
-
-      setData(response.data.data);
+      setData(dataForNow());
       setIsLoading(false);
     } catch (err) {
       setError(err);
-      alert('there is an error');
+      console.error('there is an error');
     } finally {
       setIsLoading(false);
     }
