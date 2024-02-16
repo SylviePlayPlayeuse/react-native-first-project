@@ -1,6 +1,6 @@
 import { SafeAreaView, ScrollView, View } from 'react-native';
 import { Stack } from 'expo-router';
-
+import React from 'react';
 import { COLORS, icons, images, SIZES } from '@/constants';
 import {
   Nearbyjobs,
@@ -17,10 +17,18 @@ const Home = () => {
           headerStyle: { backgroundColor: COLORS.lightWhite },
           headerShadowVisible: false,
           headerLeft: () => (
-            <ScreenHeaderBtn iconUrl={icons.menu} dimension="60%" />
+            <ScreenHeaderBtn
+              iconUrl={icons.menu}
+              dimension="60%"
+              handlePress={() => {}}
+            />
           ),
           headerRight: () => (
-            <ScreenHeaderBtn iconUrl={images.profile} dimension="100%" />
+            <ScreenHeaderBtn
+              iconUrl={images.profile}
+              dimension="100%"
+              handlePress={() => {}}
+            />
           ),
           headerTitle: '',
         }}
