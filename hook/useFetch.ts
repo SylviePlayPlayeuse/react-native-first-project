@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export const useFetch = (endpoint: string, query: Object) => {
   const [data, setData] = useState([]);
@@ -25,6 +26,7 @@ export const useFetch = (endpoint: string, query: Object) => {
           'https://img.freepik.com/free-vector/cute-panda-with-bamboo_138676-3053.jpg',
         employer_name: 'Panda',
         job_title: 'Panda Caretaker',
+        job_country: 'Panda Sanctuary',
         job_location: 'Panda Sanctuary',
         job_description: 'Panda Caretaker',
         job_type: 'Full Time',
@@ -34,11 +36,12 @@ export const useFetch = (endpoint: string, query: Object) => {
     ];
   };
 
-  const fetchData = () => {
+  const fetchData = async () => {
     setIsLoading(true);
 
     try {
-      setData(dataForNow());
+      const response = await axios.request(options);
+      setData(response.data.data);
       setIsLoading(false);
     } catch (err) {
       setError(err);
