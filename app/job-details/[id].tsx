@@ -1,13 +1,6 @@
 import { Stack, useGlobalSearchParams, useRouter } from 'expo-router';
 import React, { useCallback, useState } from 'react';
-import {
-  ActivityIndicator,
-  RefreshControl,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  View,
-} from 'react-native';
+import { RefreshControl, SafeAreaView, ScrollView, View } from 'react-native';
 
 import {
   Company,
@@ -25,17 +18,20 @@ const tabs = ['About', 'Qualifications', 'Responsibilities'];
 const JobDetails = () => {
   const params = useGlobalSearchParams();
   const router = useRouter();
+  const currentJobId = params.id as string;
+  const { getJobById } = useFetch();
 
-  const { data, isLoading, error, refetch } = useFetch('job-details', {
-    job_id: params.id,
-  });
+  /*const { data, isLoading, error } = useFetch('job-details', {
+                    job_id: params.id,
+                  });*/
+
+  const [data, setData] = useState(getJobById(currentJobId));
 
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    refetch();
     setRefreshing(false);
   }, []);
 
@@ -82,7 +78,11 @@ const JobDetails = () => {
             />
           ),
           headerRight: () => (
-            <ScreenHeaderBtn iconUrl={icons.share} dimension="60%" />
+            <ScreenHeaderBtn
+              iconUrl={icons.share}
+              dimension="60%"
+              handlePress={() => {}}
+            />
           ),
           headerTitle: '',
         }}
@@ -95,30 +95,22 @@ const JobDetails = () => {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
         >
-          {isLoading ? (
-            <ActivityIndicator size="large" color={COLORS.primary} />
-          ) : error ? (
-            <Text>Something went wrong</Text>
-          ) : data.length === 0 ? (
-            <Text>No data available</Text>
-          ) : (
-            <View style={{ padding: SIZES.medium, paddingBottom: 100 }}>
-              <Company
-                companyLogo={data[0].employer_logo}
-                jobTitle={data[0].job_title}
-                companyName={data[0].employer_name}
-                location={data[0].job_country}
-              />
+          <View style={{ padding: SIZES.medium, paddingBottom: 100 }}>
+            <Company
+              companyLogo={data[0].employer_logo}
+              jobTitle={data[0].job_title}
+              companyName={data[0].employer_name}
+              location={data[0].job_country}
+            />
 
-              <JobTabs
-                tabs={tabs}
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
-              />
+            <JobTabs
+              tabs={tabs}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+            />
 
-              {displayTabContent()}
-            </View>
-          )}
+            {displayTabContent()}
+          </View>
         </ScrollView>
 
         <JobFooter

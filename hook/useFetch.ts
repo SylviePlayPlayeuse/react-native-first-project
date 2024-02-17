@@ -1,10 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import reactData from '@/data/reactData.json';
+import contractorData from '@/data/contractor.json';
+import fullTimeData from '@/data/fullTime.json';
+import partTimeData from '@/data/partTime.json';
 
-export const useFetch = (endpoint: string, query: Object) => {
-  const [data, setData] = useState();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+export const useFetch = (endpoint?: string, query?: Object) => {
+  const [data] = useState(reactData);
+  const [isLoading] = useState(false);
+  const [error] = useState(null);
 
   const options = {
     method: 'GET',
@@ -18,47 +21,22 @@ export const useFetch = (endpoint: string, query: Object) => {
     },
   };
 
-  const dataForNow = () => {
-    return [
-      {
-        job_id: 1,
-        employer_logo:
-          'https://img.freepik.com/free-vector/cute-panda-with-bamboo_138676-3053.jpg',
-        employer_name: 'Panda',
-        job_title: 'Panda Caretaker',
-        job_country: 'Panda Sanctuary',
-        job_location: 'Panda Sanctuary',
-        job_description: 'Panda Caretaker',
-        job_type: 'Full Time',
-        job_salary: '1000',
-        job_currency: 'USD',
-      },
-    ];
+  const getJobById = (id: string) => {
+    return reactData.filter((job) => job.job_id === id);
   };
 
-  const fetchData = async () => {
-    setIsLoading(true);
-
-    try {
-      //const response = await axios.request(options);
-      setData(reactData);
-      setIsLoading(false);
-    } catch (err) {
-      setError(err);
-      console.error('there is an error');
-    } finally {
-      setIsLoading(false);
+  const getByJobType = (type: string) => {
+    switch (type) {
+      case 'contractor':
+        return contractorData;
+      case 'full-time':
+        return fullTimeData;
+      case 'part-time':
+        return partTimeData;
+      default:
+        return reactData;
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const refetch = () => {
-    setIsLoading(true);
-    fetchData();
-  };
-
-  return { data, isLoading, error, refetch };
+  return { data, isLoading, error, getJobById, getByJobType };
 };
