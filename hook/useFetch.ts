@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import reactData from '@/data/reactData.json';
 
 export const useFetch = (endpoint: string, query: Object) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -40,8 +40,8 @@ export const useFetch = (endpoint: string, query: Object) => {
     setIsLoading(true);
 
     try {
-      const response = await axios.request(options);
-      setData(response.data.data);
+      //const response = await axios.request(options);
+      setData(reactData);
       setIsLoading(false);
     } catch (err) {
       setError(err);

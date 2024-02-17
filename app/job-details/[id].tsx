@@ -1,5 +1,5 @@
 import { Stack, useGlobalSearchParams, useRouter } from 'expo-router';
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   ActivityIndicator,
   RefreshControl,
