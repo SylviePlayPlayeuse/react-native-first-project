@@ -27,14 +27,14 @@ export const useFetch = (endpoint?: string, query?: Object) => {
 
   const getByJobType = (type: string) => {
     switch (type) {
-      case 'contractor':
+      case 'Contractor':
         return contractorData;
-      case 'full-time':
+      case 'Full-time':
         return fullTimeData;
-      case 'part-time':
+      case 'Part-time':
         return partTimeData;
       default:
-        return reactData;
+        return [];
     }
   };
 

@@ -9,20 +9,19 @@ import {
   View,
 } from 'react-native';
 import { Stack, useGlobalSearchParams, useRouter } from 'expo-router';
-import axios from 'axios';
-
 import { NearbyJobCard, ScreenHeaderBtn } from '@/components';
 import { COLORS, icons, SIZES } from '@/constants';
 import styles from '@/styles/search';
+import { useFetch } from '@/hook/useFetch';
 
 const JobSearch = () => {
   const params = useGlobalSearchParams();
   const router = useRouter();
-
-  const [searchResult, setSearchResult] = useState([]);
-  const [searchLoader, setSearchLoader] = useState(false);
-  const [searchError, setSearchError] = useState(null);
+  const { getByJobType } = useFetch();
   const [page, setPage] = useState(1);
+  const [searchError, setSearchError] = useState(null);
+  const [searchLoader, setSearchLoader] = useState(false);
+  const [searchResult, setSearchResult] = useState([]);
 
   const handleSearch = async () => {
     setSearchLoader(true);
@@ -42,8 +41,10 @@ const JobSearch = () => {
         },
       };
 
-      const response = await axios.request(options);
-      setSearchResult(response.data.data);
+      const type = params.id as string;
+      console.log({ type });
+      //const response = await axios.request(options);
+      setSearchResult(getByJobType(type));
     } catch (error) {
       setSearchError(error);
       console.log(error);

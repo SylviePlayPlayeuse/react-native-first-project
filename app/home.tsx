@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { SafeAreaView, ScrollView, View } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 
 import { COLORS, icons, images, SIZES } from '@/constants';
@@ -21,10 +21,18 @@ const Home = () => {
           headerStyle: { backgroundColor: COLORS.lightWhite },
           headerShadowVisible: false,
           headerLeft: () => (
-            <ScreenHeaderBtn iconUrl={icons.menu} dimension="60%" />
+            <ScreenHeaderBtn
+              iconUrl={icons.menu}
+              dimension="60%"
+              handlePress={undefined}
+            />
           ),
           headerRight: () => (
-            <ScreenHeaderBtn iconUrl={images.profile} dimension="100%" />
+            <ScreenHeaderBtn
+              iconUrl={images.profile}
+              dimension="100%"
+              handlePress={undefined}
+            />
           ),
           headerTitle: '',
         }}
@@ -46,9 +54,9 @@ const Home = () => {
               }
             }}
           />
-
           <Popularjobs />
           <Nearbyjobs />
+          <Text>Voici mon terrain de Jeu</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
